@@ -1,2 +1,1 @@
-aplicativo criado em Javascript e banco de dados mysql
-vamos que vamos!!!
+Ultima atualização foi formatação da data e inclusão do campo id
