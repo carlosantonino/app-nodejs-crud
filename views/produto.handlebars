@@ -1,20 +1,33 @@
-    <h1>Listar Produtos</h1>
+    <h1>Lista de Produtos</h1>
     <br>
     <hr>
-
     <style>
         p {
             margin-left: 15px;
+            color: black;
+            font-size: 20px;
+        }
+
+        a {
+            margin-left: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            background-color: #000000;
+            color: white;
+            font-size: 20px;
         }
     </style>
 
     {{#each produtos}}<br>
-        <p>Cod.:{{id}}</p>
+        <p>Cod.:  {{id}}</p>
         <p>Descricao: {{descricao}}</p> 
         <p>Quant: {{quant}}</p>
-        <p>Valor:  {{valor}}</p>
+        <p>Valor: R$ {{valor}},00</p>
         <p>Data criação: {{#formatDate createdAt}} {{/formatDate}}</p>
-        <a href="/del-produto/{{id}}"><button>Apagar</button></a>
+        <a href="/del-produto/{{id}}"><button>Apagar</button></a><br><br>
         <hr>
     {{/each}}
 

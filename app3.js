@@ -40,6 +40,8 @@ app.get('/cad-produto', function(req, res) {
     res.render('cad-produto')
 })
 
+    // Cadastrar dados no banco de dados
+
 app.post('/add-produto',function(req, res){
     Produto.create({
         descricao: req.body.descricao,
@@ -55,6 +57,8 @@ app.post('/add-produto',function(req, res){
     
     //res.send("Descrição: " + req.body.descricao + "<br>Quant: " + req.body.quant + "<br>Valor: " + req.body.valor + "<br>")
 })
+
+// Deletar dados do banco
 
 app.get('/del-produto/:id', function(req, res){
     Produto.destroy({
