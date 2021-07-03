@@ -56,6 +56,17 @@ app.post('/add-produto',function(req, res){
     //res.send("Descrição: " + req.body.descricao + "<br>Quant: " + req.body.quant + "<br>Valor: " + req.body.valor + "<br>")
 })
 
+app.get('/del-produto/:id', function(req, res){
+    Produto.destroy({
+        where: { 'id': req.params.id}
+    }).then(function(){
+        res.redirect('/produto')
+        //res.send("Produto apagado com sucesos")
+    }).catch(function(erro){
+        res.send("Produto não foi apagado com sucesso")
+    })
+})
+
 
 
 app.listen(8080)

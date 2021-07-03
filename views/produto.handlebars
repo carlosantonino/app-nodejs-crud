@@ -1,12 +1,21 @@
-<h1>Listar Produtos</h1>
-<br><br>
-{{#each produtos}}<br>
-    Cod.: {{id}}<br>
-    Descricao: {{descricao}}<br>
-    Quant: {{quant}}<br>
-    Valor:  {{valor}}<br>
-    Data criação: {{#formatDate createdAt}} {{/formatDate}}<br>
-   
-{{/each}}
+    <h1>Listar Produtos</h1>
+    <br>
+    <hr>
+
+    <style>
+        p {
+            margin-left: 15px;
+        }
+    </style>
+
+    {{#each produtos}}<br>
+        <p>Cod.:{{id}}</p>
+        <p>Descricao: {{descricao}}</p> 
+        <p>Quant: {{quant}}</p>
+        <p>Valor:  {{valor}}</p>
+        <p>Data criação: {{#formatDate createdAt}} {{/formatDate}}</p>
+        <a href="/del-produto/{{id}}"><button>Apagar</button></a>
+        <hr>
+    {{/each}}
 
 {{!-- aula 14 celke tempo final 9:04 --}}
