@@ -30,6 +30,8 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 // Rotas
+
+
 app.get('/produto', function(req, res) {
     Produto.findAll().then(function(produtos){
         res.render('produto',{produtos:produtos})
