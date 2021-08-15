@@ -10,7 +10,7 @@ const connection = mysql.createConnection({  // conexao com o banco de dados mys
     password: 'C30s20#15',
     database: 'node'
 })
-// teste de push
+
 // tratamento de erros da conexão mysql
 connection.connect(function(err){
     if(err) {
