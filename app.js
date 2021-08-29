@@ -1,85 +1,78 @@
 const express = require("express")
-
 const app = express()
+const handlebars = require("express-handlebars")
+const bodyParser = require("body-parser")
+const Produto  = require("./models/Produto")
+const moment = require('moment')
 
-const mysql = require("mysql")  // requisição do mysql
+// app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 
-const connection = mysql.createConnection({  // conexao com o banco de dados mysql
-    host: 'localhost',
-    user: 'root',
-    password: 'C30s20#15',
-    database: 'node'
-})
 
-// tratamento de erros da conexão mysql
-connection.connect(function(err){
-    if(err) {
-        console.error('error connecting: ' + err.stack)
-        return
+app.engine('handlebars', handlebars({
+    defaultLayout: 'main',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
+    helpers: {
+        formatDate: (date) => {
+            return moment(date).format('DD/MM/YYYY')
+        }
     }
-    console.log('Conectado com sucesso ' + connection.threadId)
-})
-// Select 
-// connection.query('SELECT * from produtos',function(err, rows,fields){
-//         if(!err){
-//             console.log('Resultado: ', rows)
-//         } else {
-//             console.log('Erro ao realizar a consulta')
-//         }
-//     })
+}))
 
 
-// Insert
+app.set('view engine', 'handlebars')
 
 
-// connection.query("INSERT INTO cliente(nome, email, telefone) VALUES ('Antonio Coelho', 'antoniocoelho@gmail.com','99999999')",function(err, Result){
-//     if(!err) {
-//         console.log('Usuario cadastrado com sucesso!')
-//     } else {
-//         console.log('Erro ao cadastrar o usuario')
-//     }
-// })
+app.use(bodyParser.urlencoded({ extended: false}))
 
-// Altera registro
+app.use(bodyParser.json())
 
-// connection.query("UPDATE cliente SET nome = 'Francisco Antonio' WHERE telefone = 99999999",
-// function(err, result){
-// //         if(!err) {
-// //             console.log('Usuario alterado com sucesso!')
-// //         } else {
-// //             console.log('Erro: o usuario não foi alterado com sucesso!')
-// //         }
+// Rotas
+
+
+app.get('/produto', function(req, res) {
+    Produto.findAll().then(function(produtos){
+        res.render('produto',{produtos:produtos})
+    })
     
-// });
+})
+app.get('/cad-produto', function(req, res) {
+    res.render('cad-produto')
+})
 
-// Deleta registro
-// connection.query("DELETE FROM cliente WHERE nome = 'Antonio Coelho'", function(err,
-//     result){
-//     if(!err){
-//         console.log("Usuario apagado com sucesso!")
-//     } else {
-//         console.log("Erro: o usuario não foi apagado com sucesso!")
-//     }
-// })
+    // Cadastrar dados no banco de dados
 
-// Fim deleta registro
+app.post('/add-produto',function(req, res){
+    Produto.create({
+        descricao: req.body.descricao,
+        quant: req.body.quant,
+        valor: req.body.valor
+    }).then(function(){
+        res.redirect('/produto')
+        //res.send("Produto cadastrado com sucesso.")
+    }).catch(function(erro){
+        res.send("Erro: Produto não foi cadastrado" + erro)
+    })
 
-// app.get("/", function(req, res){
-//     res.sendFile(__dirname + "/src/index.html")
-// })
-
-// app.get("/contato", function(req, res){
-//     res.sendFile(__dirname + "/src/contato.html")
-// })
-
-
-app.get("/", function(req, res){
     
-    res.sendFile(__dirname + "/src/index.html")
-    // res.send("Gerenciador financeiro")
+    //res.send("Descrição: " + req.body.descricao + "<br>Quant: " + req.body.quant + "<br>Valor: " + req.body.valor + "<br>")
 })
-app.get("/contato",function(req,res){
-   res.send("Contato")  
+
+// Deletar dados do banco
+
+app.get('/del-produto/:id', function(req, res){
+    Produto.destroy({
+        where: { 'id': req.params.id}
+    }).then(function(){
+        res.redirect('/produto')
+        //res.send("Produto apagado com sucesos")
+    }).catch(function(erro){
+        res.send("Produto não foi apagado com sucesso")
+    })
 })
+
+
 
 app.listen(8080)
