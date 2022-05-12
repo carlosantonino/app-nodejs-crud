@@ -6,6 +6,7 @@ const Produto  = require("./models/Produto")
 const Pedido = require("./models/Pedido")
 const Cliente = require("./models/Cliente")
 const moment = require('moment')
+const { redirect } = require("express/lib/response")
 
 // app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 
@@ -32,7 +33,9 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.use(bodyParser.json())
 
 // Rotas
-
+app.get('/', function(req, res) {
+    res.render('home')
+})
 
 app.get('/produto', function(req, res) {
     Produto.findAll().then(function(produtos){
@@ -46,7 +49,7 @@ app.get('/produto', function(req, res) {
      })
  })
 
- app.get('./cliente', function(req, res){
+ app.get('/cliente', function(req, res){
      Cliente.findAll().then(function(clientes){
          res.render('cliente',{clientes:clientes})
      })
@@ -96,9 +99,9 @@ app.post('/add-pedido', function(req, res) {
 
 app.post('/add-cliente', function(req, res){
     Cliente.create({
-        nome:req.body.nome,
-        endereco:req.body.endereco,
-        tel:req.body.tel
+        nome: req.body.nome,
+        endereco: req.body.endereco,
+        tel: req.body.tel
     }).then(function(){
         res.redirect('/cliente')
     }).catch(function(erro){

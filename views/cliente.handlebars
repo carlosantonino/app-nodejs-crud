@@ -25,9 +25,10 @@
     </style>
 <h1>Lista de Clientes</h1>
 
-{{#each clientes}}
+{{#each clientes}}<br>
     <p>Nome: {{nome}}</p>
     <p>Endereço: {{endereco}}</p>
     <p>Telefone: {{tel}}</p>
     <p>Data criação: {{#formatDate createdAt}} {{/formatDate}}</p>
+    <hr>
 {{/each}}

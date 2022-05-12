@@ -9,6 +9,9 @@ const Pedido = db.sequelize.define('pedidos', {
     },
     valor: {
         type: db.Sequelize.DOUBLE
+    },
+    status: {
+        type:db.Sequelize.BOOLEAN
     }
 })
 
