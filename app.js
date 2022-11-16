@@ -37,9 +37,9 @@ app.get('/', function(req, res) {
     res.render('home')
 })
 
-app.get('/teste', function(req, res){
-    res.render('index')
-})
+// app.get('/teste', function(req, res){
+//     res.render('index')
+// })
 
 app.get('/produto', function(req, res) {
     Produto.findAll().then(function(produtos){
